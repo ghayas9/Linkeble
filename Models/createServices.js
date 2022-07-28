@@ -58,6 +58,10 @@ const Service = new mongoose.Schema({
         type:[{
             type:String
         }]
+    },
+    status:{
+        type:String,
+        num:['active','pause','panding','draft','rejected']
     }
 
 },{

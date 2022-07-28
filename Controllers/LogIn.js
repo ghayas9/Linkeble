@@ -5,6 +5,10 @@ const Joi = require('joi')
 const jwtKey = process.env.jwtKey || 'LogIn'
 const bcrypt = require("bcryptjs")
 const salt = bcrypt.genSaltSync(10);
+const mongoose = require('mongoose')
+/////////////MODELS/////////////
+const User = require('../Models/User')
+/////////////MODELS/////////////
 
 const random = (min,max)=>{
     return (Math.floor(Math.random() * (max - min + 1)) + min)
@@ -18,18 +22,39 @@ module.exports = {
         }).validate(req.body)
         if(value.error){
             return res.status(400).json({
-                 success: false, message:value.error.message
+                 success: false, 
+                 message:value.error.message
             })
         }
-        const hash = bcrypt.hashSync(req.body.password, salt)
-        try{
-             //DATABASE CONNECTION
-            //DATABASE CONNECTION
-           return res.json({success:true,message:'created successfully'})
-        }catch(err){
-            return res.status(500).json({success:false,message:'some thing went wrong',err})
-        }
-       
+            try{
+                const fnd = await User.findOne({email:req.email})
+                if(fnd){
+                    //already exist
+                    return res.status(400).json({
+                        success:false,
+                        message:'email already exist'
+                    })
+                }else{
+                    //created successfully
+                    req.body.password = bcrypt.hashSync(req.body.password, salt)
+                    const newuser = new User(req.body)
+                    newuser._id = mongoose.Types.ObjectId()
+                    const creatuser = await newuser.save()
+                    return res.json({
+                        success:true,
+                        message:'created successfully',
+                        user:creatuser
+                    })
+                }
+            }catch(err){
+                //error message
+                console.log(err);
+                return res.status(500).json({
+                    success:false,
+                    message:'server issue try again later',
+                    err
+                })
+            }
     },
     SignIn:async(req,res)=>{
         const value = Joi.object({
@@ -38,18 +63,41 @@ module.exports = {
         }).validate(req.body)
         if(value.error){
             return res.status(400).json({
-                 success: false, message:value.error.message
+                 success: false, 
+                 message:value.error.message
             })
         }
-
-        //DATABASE
-        //DATABASE
-        const isPsswordcorrect = bcrypt.compareSync(req.body.password, data.password)
-        if(isPsswordcorrect){
-            const token = jwt.sign(data.toObject(),jwtKey)
-            return res.json({success:true,message:'Successfully LogIn',token})
-        }else{
-            return res.status(400).json({success:false,message:'wrong password'})
+        try{
+            const user = await User.findOne({email:req.body.email})
+            if(user){
+                const isPsswordcorrect = bcrypt.compareSync(req.body.password, user.password)
+                if(isPsswordcorrect){
+                    const token = jwt.sign(user.toObject(),jwtKey)
+                    return res.json({
+                        success:true,
+                        message:'Successfully LogIn',
+                        token
+                    })
+                }else{
+                    return res.status(400).json({
+                        success:false,
+                        message:'wrong password'
+                    })
+                }
+            }else{
+                //user not found
+                return res.status(404).json({
+                    success:false,
+                    message:'user not found'
+                })
+            }
+        }catch(err){
+            //error message
+            console.log(err);
+            return res.status(500).json({
+                success:false,
+                message:'server issue try again later'
+            })
         }
     },
     LogInWithGoogle:async(req,res)=>{
@@ -63,10 +111,18 @@ module.exports = {
             // DATABASE CONNECTION
             // DATABASE CONNECTION
             const genToken = jwt.sign(ticket,jwtKey)
-            return res.json({success:true,message:'Login successfully',token:genToken})
+            return res.json({
+                success:true,
+                message:'Login successfully',
+                token:genToken
+            })
         }catch(err){
             console.log(err);
-            return res.status(401).json({success:false,message:'some thing went wrong',err})
+            return res.status(401).json({
+                success:false,
+                message:'some thing went wrong',
+                err
+            })
         } 
     }
     ,//forgot password 
@@ -76,7 +132,8 @@ module.exports = {
         }).validate(req.body)
         if(value.error){
             return res.status(400).json({
-                 success: false, message:value.error.message
+                 success: false, 
+                 message:value.error.message
             })
         }
         //DATABASE
@@ -92,7 +149,8 @@ module.exports = {
         }).validate(req.body)
         if(value.error){
             return res.status(400).json({
-                 success: false, message:value.error.message
+                 success: false, 
+                 message:value.error.message
             })
         }
 
@@ -108,7 +166,8 @@ module.exports = {
         }).validate(req.body)
         if(value.error){
             return res.status(400).json({
-                 success: false, message:value.error.message
+                 success: false, 
+                 message:value.error.message
             })
         }
 

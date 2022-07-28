@@ -19,13 +19,18 @@ module.exports = {
 
     },
     createServicesStepTwo:async(req,res)=>{
-        const value = Joi.object({
+        const InnerValues = Joi.object().keys({
             title: Joi.string().required(),
             description: Joi.string().required(),
             deliver:Joi.number().required(),
             numberofscreen:Joi.string(),
             revisions:Joi.number().required(),
             price:Joi.number.required()
+        })
+        const value = Joi.object({
+            basic:InnerValues,
+            standard:InnerValues,
+            premium:InnerValues,
         }).validate(req.body)
         if(value.error){
             return res.status(400).json({
