@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const Service = new mongoose.Schema({
     _id:mongoose.Types.ObjectId,
+    uid:mongoose.Types.ObjectId,
     title:String,
     description:String,
     catagory:{
@@ -13,7 +14,9 @@ const Service = new mongoose.Schema({
         ref:'subcatagory'
     },
     tags:{
-        type:[{type:String}]
+        type:[{
+            type:String
+        }]
     },
     pricing:{
         type:{
@@ -45,8 +48,10 @@ const Service = new mongoose.Schema({
                 price:Number
             }
         }
-    },yourquestion:{
-        type:[{type:String}]
+    },questions:{
+        type:[{
+                type:String
+            }]
     },software:{
         type:String
     },images:{

@@ -101,6 +101,17 @@ module.exports = {
         }
     },
     LogInWithGoogle:async(req,res)=>{
+        
+        const value = Joi.object({
+            token: Joi.string().required()
+        }).validate(req.body)
+        if(value.error){
+            return res.status(400).json({
+                 success: false, 
+                 message:value.error.message
+            })
+        }
+
         try{
             const { token }  = req.body
             const ticket = await client.verifyIdToken({
@@ -108,8 +119,9 @@ module.exports = {
                 audience: process.env.CLIENT_ID
             });
             const { name, email, picture } = ticket.getPayload();
-            // DATABASE CONNECTION
-            // DATABASE CONNECTION
+            // DATABASE 
+            // code
+            // DATABASE 
             const genToken = jwt.sign(ticket,jwtKey)
             return res.json({
                 success:true,
@@ -155,6 +167,7 @@ module.exports = {
         }
 
         //DATABASE
+        // code
         //DATABASE
 
 
@@ -172,6 +185,7 @@ module.exports = {
         }
 
         //DATABASE
+        // code
         //DATABASE
     }
 }
