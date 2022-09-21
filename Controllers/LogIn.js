@@ -8,6 +8,8 @@ const salt = bcrypt.genSaltSync(10);
 const mongoose = require('mongoose')
 /////////////MODELS/////////////
 const User = require('../Models/User')
+const accountSetting = require('../Models/accountSetting')
+const NotificationSetting = require('../Models/NotificationSetting')
 /////////////MODELS/////////////
 
 const random = (min,max)=>{
@@ -27,7 +29,7 @@ module.exports = {
             })
         }
             try{
-                const fnd = await User.findOne({email:req.email})
+                const fnd = await User.findOne({email:req.body.email})
                 if(fnd){
                     //already exist
                     return res.status(400).json({
@@ -40,6 +42,15 @@ module.exports = {
                     const newuser = new User(req.body)
                     newuser._id = mongoose.Types.ObjectId()
                     const creatuser = await newuser.save()
+                    //account setting config..
+                    const createAccountSetting = new accountSetting()
+                    const creactNotificationSetting = new NotificationSetting()
+                    //******************************//
+                    createAccountSetting._id=mongoose.Types.ObjectId(creatuser._id)
+                    creactNotificationSetting._id=mongoose.Types.ObjectId(creatuser._id)
+                    await createAccountSetting.save()
+                    await NotificationSetting.save()
+                    //account setting config..
                     return res.json({
                         success:true,
                         message:'created successfully',

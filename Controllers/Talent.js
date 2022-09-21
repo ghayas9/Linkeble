@@ -76,11 +76,10 @@ module.exports = {
             })
         }
     },
-    sendMessage:async(req,res)=>{
+    createServicesStepThree:async(req,res)=>{
         const value = Joi.object({
-            message: Joi.string().required(),
-            creactedfor:Joi.string().required(),
-            file: Joi.string(),
+            questions: Joi.array(),
+            faq:Joi.string()
         }).validate(req.body)
         if(value.error){
             return res.status(400).json({
@@ -89,25 +88,25 @@ module.exports = {
             })
         }
 
+
         try{
-            const NewMessage = new Message()
-            NewMessage._id=mongoose.Types.ObjectId()
-            NewMessage.message=req.body.message
-            NewMessage.createdby=req.payload._id
-            NewMessage.createdfor=req.body.createdfor
-
-            if(req.body.file){
-                NewMessage.file=req.body.file
-            }
-
-            const CreatedMessage = await NewMessage.save() 
+            const updateService = await Service.updateOne({_id:req.body.id},{
+                $set:req.body
+            })
             return res.json({
                 success:true,
-                message:CreatedMessage
+                message:'saved successfully',
+                service:updateService
             })
         }catch(err){
             console.log(err);
+            return res.status(500).json({
+                success:false,
+                message:'server issue please try again later',
+                err
+            })
         }
-        
     }
+
+    
 }

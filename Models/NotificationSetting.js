@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Notification = new mongoose.Schema({
-    uid:mongoose.Types.ObjectId,
+    _id:mongoose.Types.ObjectId,
     orderUpdate:{
         type:Boolean,
         default:true

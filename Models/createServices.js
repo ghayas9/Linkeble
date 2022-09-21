@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-
 const Service = new mongoose.Schema({
     _id:mongoose.Types.ObjectId,
     uid:mongoose.Types.ObjectId,
@@ -52,7 +51,7 @@ const Service = new mongoose.Schema({
         type:[{
                 type:String
             }]
-    },software:{
+    },faq:{
         type:String
     },images:{
         type:[{

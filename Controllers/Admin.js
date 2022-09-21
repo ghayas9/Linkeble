@@ -25,7 +25,7 @@ module.exports ={
             return res.json({
                 success:true,
                 message:'added  successfully',
-                lan:createLan
+                data:createLan
             })
         }catch(err){
             return res.status(500).json({
@@ -54,13 +54,14 @@ module.exports ={
             return res.json({
                 success:true,
                 message:'added  successfully',
-                cat:createCat
+                data:createCat
             })
 
         }catch(err){
             return res.status(500).json({
                 success:false,
-                message:'server issue try again later'
+                message:'server issue try again later',
+                err
             })
         }
     }

@@ -19,7 +19,6 @@ const User = new mongoose.Schema({
         required:[true,'password is required']
     },
     typeOfUser:{
-        typeOf:{
             isBuyer:{
                 type:Boolean,
                 default:true
@@ -32,7 +31,6 @@ const User = new mongoose.Schema({
                 type:Boolean,
                 default:false
             }
-        }
     }
 },{
     timestamps:true
