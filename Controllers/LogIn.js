@@ -83,7 +83,9 @@ module.exports = {
             if(user){
                 const isPsswordcorrect = bcrypt.compareSync(req.body.password, user.password)
                 if(isPsswordcorrect){
-                    const token = jwt.sign(user.toObject(),jwtKey)
+                    const UserData = user.toObject()
+                    delete UserData.password
+                    const token = jwt.sign(UserData,jwtKey)
                     return res.json({
                         success:true,
                         message:'Successfully LogIn',
@@ -160,6 +162,17 @@ module.exports = {
             })
         }
         //DATABASE
+            try{
+
+                    {opt ,email }
+
+            }catch(err){
+                return res.status(500).json({
+                    success:false,
+                    message:'please try later',
+                    err
+                })
+            }
             const otp = random(1000,9999)
         //DATABASE
 
@@ -167,7 +180,7 @@ module.exports = {
     },
     forgotPasswordStepTwo:async(req,res)=>{
         const value = Joi.object({
-            id:Joi.string(),
+            token:Joi.string(),
             otp: Joi.number().max(4).min(4).required(),
         }).validate(req.body)
         if(value.error){
@@ -176,7 +189,8 @@ module.exports = {
                  message:value.error.message
             })
         }
-
+             token 
+             opt 
         //DATABASE
         // code
         //DATABASE
