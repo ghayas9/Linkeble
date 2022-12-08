@@ -3,6 +3,7 @@ const client = new OAuth2Client(process.env.CLIENT_ID)
 const jwt = require('jsonwebtoken')
 const Joi = require('joi')
 const jwtKey = process.env.jwtKey || 'LogIn'
+const forgetKey = process.env.jwtKey || 'forgetKey'
 const bcrypt = require("bcryptjs")
 const salt = bcrypt.genSaltSync(10);
 const mongoose = require('mongoose')
@@ -10,6 +11,7 @@ const mongoose = require('mongoose')
 const User = require('../Models/User')
 const accountSetting = require('../Models/accountSetting')
 const NotificationSetting = require('../Models/NotificationSetting')
+const sendOTPbyEmail = require('./Email/sendOTPbyEmail')
 /////////////MODELS/////////////
 
 const random = (min,max)=>{
@@ -163,8 +165,26 @@ module.exports = {
         }
         //DATABASE
             try{
-
-                    {opt ,email }
+                const user = await User.findOne({email:req.body.email})
+                if(user){
+                    const otp = random(1000,9999)
+                    const token = jwt.sign({
+                        id:user._id,
+                        email:user.email,
+                        otp
+                    },forgetKey)
+                    await sendOTPbyEmail(otp,req.body.email)
+                    return res.json({
+                        success:true,
+                        token
+                    })
+                }else{
+                    return res.status(400).json({
+                        success:false,
+                        message:'User Not found'
+                    })
+                }
+                
 
             }catch(err){
                 return res.status(500).json({
@@ -173,7 +193,7 @@ module.exports = {
                     err
                 })
             }
-            const otp = random(1000,9999)
+            
         //DATABASE
 
         //SEND EMAIL
