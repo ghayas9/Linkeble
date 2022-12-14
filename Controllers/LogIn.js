@@ -209,7 +209,6 @@ module.exports = {
                  message:value.error.message
             })
         }
-<<<<<<< HEAD
 
         try{
 
@@ -219,10 +218,8 @@ module.exports = {
                 message:'some thing went wrong'
             })
         }   
-=======
-             token 
-             otp 
->>>>>>> b5762bcd82c4d74cc86981760713aa945a2838c4
+            //  token 
+            //  otp 
         //DATABASE
         // code
         //DATABASE
