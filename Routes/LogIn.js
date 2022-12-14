@@ -1,10 +1,10 @@
 const express = require('express')
-const { SignIn, SignUp, forgotPasswordbyemail, forgotPasswordverifyOtp, forgotPasswordconfirmpassword } = require('../Controllers/LogIn')
+const { SignIn, SignUp, forgotPasswordStepOne, forgotPasswordStepTwo,forgotPasswordFinalStep} = require('../Controllers/LogIn')
 const route = express.Router()
 
 route.post('/signin',SignIn)
 route.post('/signup',SignUp)
-route.post('/forget/password/email',forgotPasswordbyemail)
-route.post('/forget/password/verify/otp',forgotPasswordverifyOtp)
-route.post('/forget/password/change/password',forgotPasswordconfirmpassword)
+route.post('/forget/password/email',forgotPasswordStepOne)
+route.post('/forget/password/verify/otp',forgotPasswordStepTwo)
+route.post('/forget/password/change/password',forgotPasswordFinalStep)
 module.exports= route
