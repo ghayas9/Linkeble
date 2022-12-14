@@ -50,8 +50,8 @@ module.exports = {
                     //******************************//
                     createAccountSetting._id=mongoose.Types.ObjectId(creatuser._id)
                     creactNotificationSetting._id=mongoose.Types.ObjectId(creatuser._id)
-                    await createAccountSetting.save()
-                    await NotificationSetting.save()
+                    await createAccountSetting.save
+                    await NotificationSetting.save
                     //account setting config..
                     return res.json({
                         success:true,
@@ -209,6 +209,7 @@ module.exports = {
                  message:value.error.message
             })
         }
+<<<<<<< HEAD
 
         try{
 
@@ -218,6 +219,10 @@ module.exports = {
                 message:'some thing went wrong'
             })
         }   
+=======
+             token 
+             otp 
+>>>>>>> b5762bcd82c4d74cc86981760713aa945a2838c4
         //DATABASE
         // code
         //DATABASE
