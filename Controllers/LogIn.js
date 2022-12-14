@@ -187,6 +187,7 @@ module.exports = {
                 
 
             }catch(err){
+                console.log(err)
                 return res.status(500).json({
                     success:false,
                     message:'please try later',
@@ -210,7 +211,7 @@ module.exports = {
             })
         }
 
-        try{
+        try{ 
 
         }catch(err){
             return res.status(400).json({
@@ -218,11 +219,11 @@ module.exports = {
                 message:'some thing went wrong'
             })
         }   
-            //  token 
-            //  otp 
-        //DATABASE
+        //  token 
+        //  otp 
+        // DATABASE
         // code
-        //DATABASE
+        // DATABASE
     },
     forgotPasswordFinalStep:async(req,res)=>{
         const value = Joi.object({

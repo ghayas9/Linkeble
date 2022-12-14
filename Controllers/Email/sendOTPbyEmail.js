@@ -10,8 +10,7 @@ const oAuth2Client = new google.auth.OAuth2(
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 
-module.exports = {
-    sendOTPbyEmail: (OTP,email)=>{
+ const sendOTPbyEmail= (OTP,email)=>{
         return new Promise(async(resolve, reject)=>{
             try{
                 const accessToken = await oAuth2Client.getAccessToken();
@@ -44,6 +43,7 @@ module.exports = {
                     message:'Email has been sent successfully'
                  })
             }catch(err){
+                console.log(err)
                 reject({
                     success:false,
                     err
@@ -51,4 +51,7 @@ module.exports = {
             }
         })
     }
-}
+
+
+
+module.exports = sendOTPbyEmail

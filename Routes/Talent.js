@@ -3,8 +3,8 @@ const { createServicesStepOne, createServicesStepTwo } = require('../Controllers
 const route = express.Router()
 
 
-route.post('/serviceStepOne',createServicesStepOne)
-route.post('/serviceStepTwo',createServicesStepTwo)
+route.post('/service/step/one',createServicesStepOne)
+route.post('/service/step/two',createServicesStepTwo)
 
 
 module.exports= route
