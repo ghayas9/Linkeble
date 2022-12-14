@@ -50,8 +50,8 @@ module.exports = {
                     //******************************//
                     createAccountSetting._id=mongoose.Types.ObjectId(creatuser._id)
                     creactNotificationSetting._id=mongoose.Types.ObjectId(creatuser._id)
-                    await createAccountSetting.save()
-                    await NotificationSetting.save()
+                    await createAccountSetting.save
+                    await NotificationSetting.save
                     //account setting config..
                     return res.json({
                         success:true,
@@ -210,7 +210,7 @@ module.exports = {
             })
         }
              token 
-             opt 
+             otp 
         //DATABASE
         // code
         //DATABASE

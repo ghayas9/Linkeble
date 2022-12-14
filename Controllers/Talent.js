@@ -44,7 +44,7 @@ module.exports = {
             deliver:Joi.number().required(),
             numberofscreen:Joi.string(),
             revisions:Joi.number().required(),
-            price:Joi.number.required()
+            price:Joi.number().required()
         })
         const value = Joi.object({
             basic:InnerValues,
