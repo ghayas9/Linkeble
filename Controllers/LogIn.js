@@ -209,13 +209,18 @@ module.exports = {
                  message:value.error.message
             })
         }
-             token 
-             opt 
+
+        try{
+
+        }catch(err){
+            return res.status(400).json({
+                success:false,
+                message:'some thing went wrong'
+            })
+        }   
         //DATABASE
         // code
         //DATABASE
-
-
     },
     forgotPasswordFinalStep:async(req,res)=>{
         const value = Joi.object({
