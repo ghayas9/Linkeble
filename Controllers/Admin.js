@@ -3,6 +3,7 @@ const Joi = require('joi')
 
 const Language = require('../Models/Languages')
 const Catagory = require('../Models/Catagory')
+const subCatagory = require('../Models/SubCatagory')
 
 module.exports ={
     addLanguage:async(req,res)=>{
@@ -67,9 +68,8 @@ module.exports ={
     },
     addSubCat : async(req,res)=>{
         const value = Joi.object({
-            catId:Joi.string().required(),
+            cat:Joi.string().required(),
             name:Joi.string().required(),
-            
         }).validate(req.body)
         if(value.error){
             return res.status(400).json({
@@ -81,15 +81,27 @@ module.exports ={
         try{
             const check_cat = await Catagory.findOne({_id:req.body.catId})
             if(check_cat){
-                const addSub = await Catagory.updateOne({ _id:req.body.catId} , {
-                    $push: 
-                    {
-                        sub: {
-                        _id: mongoose.Types.ObjectId(), 
-                        name: req.body.name
-                    }
-                    }
+                // const addSub = await Catagory.updateOne({ _id:req.body.catId} , {
+                //     $push: 
+                //     {
+                //         sub: {
+                //         _id: mongoose.Types.ObjectId(), 
+                //         name: req.body.name
+                //     }
+                //     }
+                // })
+                const newSub = new subCatagory()
+                newSub._id = mongoose.Types.ObjectId()
+                newSub.cat = mongoose.Types.ObjectId(req.body.cat)
+                newSub.name = req.body.name
+                const crSub = await newSub.save()
+
+                return res.json({
+                    success:true,
+                    message:'created Successfully',
+                    data:crSub
                 })
+
             }else{
                 return res.status(400).json({
                     success:false,
@@ -106,5 +118,20 @@ module.exports ={
         }
 
         
+    },
+    getAllCat:async(req,res)=>{
+        try{
+            const cat = await Catagory.find()
+            return res.json({
+                success:true,
+                data:cat
+            })
+        }catch(err){
+            return res.status(500).json({
+                success:false,
+                message:'try again later',
+                err
+            })
+        }
     }
 }
