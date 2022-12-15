@@ -64,5 +64,46 @@ module.exports ={
                 err
             })
         }
+    },
+    addSubCat : async(req,res)=>{
+        const value = Joi.object({
+            catId:Joi.string().required(),
+            name:Joi.string().required()
+        }).validate(req.body)
+        if(value.error){
+            return res.status(400).json({
+                success:false,
+                message:value.error.message
+            })
+        }
+
+        try{
+            const check_cat = await Catagory.findOne({_id:req.body.catId})
+            if(check_cat){
+                const addSub = await Company.updateOne({ _id:req.body.catId} , {
+                    $push: 
+                    {
+                        sub: {
+                        _id: mongoose.Types.ObjectId(), 
+                        name: req.body.name
+                    }
+                    }
+                })
+            }else{
+                return res.status(400).json({
+                    success:false,
+                    message:'Cat not found please enter correct catId',
+                }) 
+            }
+
+        }catch(err){
+            return res.status(500).json({
+                success:false,
+                message:'try again later',
+                err
+            }) 
+        }
+
+        
     }
 }
