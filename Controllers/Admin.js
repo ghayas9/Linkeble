@@ -68,7 +68,8 @@ module.exports ={
     addSubCat : async(req,res)=>{
         const value = Joi.object({
             catId:Joi.string().required(),
-            name:Joi.string().required()
+            name:Joi.string().required(),
+            
         }).validate(req.body)
         if(value.error){
             return res.status(400).json({
@@ -80,7 +81,7 @@ module.exports ={
         try{
             const check_cat = await Catagory.findOne({_id:req.body.catId})
             if(check_cat){
-                const addSub = await Company.updateOne({ _id:req.body.catId} , {
+                const addSub = await Catagory.updateOne({ _id:req.body.catId} , {
                     $push: 
                     {
                         sub: {

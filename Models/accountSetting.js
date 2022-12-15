@@ -18,7 +18,7 @@ const accountSetting = new mongoose.Schema({
     location:{
         type:String
     },
-    reposetime:{
+    responsetime:{
         type:Number,
         default:100
     },

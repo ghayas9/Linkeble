@@ -10,6 +10,11 @@ dbCOnnection()
 
 app.use(bodyParser.json())
 app.use(multer().any())
+app.get('/',(req,res)=>{
+    return res.json({
+        success:true
+    })
+})
 
 app.use(require('./Routes/rootRoute'))
 
