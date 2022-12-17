@@ -1,5 +1,8 @@
+const Joi = require('joi')
 const mongoose =require('mongoose')
 const Message = require('../Models/Message')
+
+const review = require('../Models/Review')
 
 module.exports ={
     sendMessage:async(req,res)=>{
@@ -53,5 +56,42 @@ module.exports ={
                 message:'server issue try again later'
             })
         }
+    },
+    addNewReview:async(req,res)=>{
+        const value = Joi.object({
+            rating: Joi.number().required(),
+            review:Joi.string().required(),
+            for:Joi.string().required()
+        }).validate(req.body)
+        if(value.error){
+            return res.status(400).json({
+                 success: false, 
+                 message:value.error.message
+            })
+        }
+
+        const newReview = new review()
+        newReview._id = mongoose.Types.ObjectId()
+        newReview.by = mongoose.Types.ObjectId(req.payload._id)
+        newReview.for =  mongoose.Types.ObjectId(req.body.for)
+        newReview.rating = req.body.rating
+        newReview.review = req.body.review
+
+        try{
+            const crReview = await newReview.save()
+            return res.json({
+                success:true,
+                message:'review submitted',
+                data:crReview
+            })
+
+        }catch(err){
+            return res.status.json({
+                success:false,
+                message:'try again later',
+                err
+            })
+        }
     }
+
 }

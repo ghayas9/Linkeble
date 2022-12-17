@@ -1,13 +1,10 @@
 const mongoose = require('mongoose')
-const sellerreview = new mongoose.Schema({
+const review = new mongoose.Schema({
     _id:mongoose.Types.ObjectId,
-    seller:{
+    by:{
         type:mongoose.Types.ObjectId
     },
-    buyer:{
-        type:mongoose.Types.ObjectId
-    },
-    service:{
+    for:{
         type:mongoose.Types.ObjectId
     },
     review:{
@@ -22,4 +19,4 @@ const sellerreview = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('sellerreview',sellerreview)
+module.exports = mongoose.model('review',review)
