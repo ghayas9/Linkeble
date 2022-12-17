@@ -48,7 +48,7 @@ module.exports = {
             title: Joi.string().required(),
             description: Joi.string().required(),
             deliver:Joi.number().required(),
-            numberofscreen:Joi.string(),
+            numberofscreen:Joi.string().required(),
             revisions:Joi.number().required(),
             price:Joi.number().required()
         })
@@ -65,7 +65,7 @@ module.exports = {
         }
 
         try{
-            const updateService = await Service.updateOne({_id:req.body.id},{
+            const updateService = await Service.updateOne({_id:req.params.id},{
                 $set:req.body
             })
             return res.json({
@@ -96,7 +96,7 @@ module.exports = {
 
 
         try{
-            const updateService = await Service.updateOne({_id:req.body.id},{
+            const updateService = await Service.updateOne({_id:req.params.id},{
                 $set:req.body
             })
             return res.json({
@@ -112,7 +112,9 @@ module.exports = {
                 err
             })
         }
-    }
+    },
+
+    
 
     
 }
