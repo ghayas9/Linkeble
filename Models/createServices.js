@@ -65,7 +65,8 @@ const Service = new mongoose.Schema({
     },
     status:{
         type:String,
-        num:['active','pause','panding','draft','rejected']
+        num:['active','pause','panding','draft','rejected'],
+        default:'draft'
     }
 
 },{
