@@ -79,7 +79,7 @@ module.exports ={
         }
 
         try{
-            const check_cat = await Catagory.findOne({_id:req.body.catId})
+            const check_cat = await Catagory.findOne({_id:req.body.cat})
             if(check_cat){
                 // const addSub = await Catagory.updateOne({ _id:req.body.catId} , {
                 //     $push: 
