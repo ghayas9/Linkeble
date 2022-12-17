@@ -20,7 +20,7 @@ module.exports = {
             })
         }
         const newService = new Service()
-
+        newService.uid=mongoose.Types.ObjectId(req.payload._id)
         newService._id = mongoose.Types.ObjectId()
         newService.title = req.body.title
         newService.description = req.body.description
@@ -94,7 +94,6 @@ module.exports = {
             })
         }
 
-
         try{
             const updateService = await Service.updateOne({_id:req.params.id},{
                 $set:req.body
@@ -113,8 +112,74 @@ module.exports = {
             })
         }
     },
+    createServicesStepFour:async(req,res)=>{
+        try{
 
-    
+        var arrayOfImgs = []
+        var arrayOfDocs = []
 
+        const imgs = req.files.imgs
+        const docs = req.files.docs
+
+        if(imgs){
+            arrayOfImgs = imgs.map((e)=>{
+                return hostUrl+'/up/'+ e.originalname
+            })
+        }
+        if(docs){
+            arrayOfDocs = docs.map((e)=>{
+                return hostUrl+'/up/'+ e.originalname
+            })
+        }
+
+        const update_ser = await Service.updateOne({_id: req.params.id},
+             {
+                $set: {
+                    imgs:arrayOfImgs ,
+                    docs:arrayOfDocs
+                    }
+            });
+
+            return res.json({
+                success:true,
+                message:'imgs and docs updated',
+                data:{
+                    db:update_ser,
+                    imgs:arrayOfImgs,
+                    docs:arrayOfDocs
+                }
+            })
+
+        }catch(err){
+            return res.status(500).json({
+                success:false,
+                message:'try again later'
+            })
+        }
+
+    },
+
+    middelware:async(req,res,next)=>{
+        try{
+            const ser = await Service.findOne({
+                _id:req.params.id,
+                uid:req.payload._id
+            })
+
+            if(ser){
+                next()
+            }else{
+                return res.status(401).json({
+                    success:false,
+                    message:'service not found'
+                })
+            }
+        }catch(err){
+            return res.status(401).json({
+                success:false,
+                message:'try again later'
+            })
+        }
+    }
     
 }

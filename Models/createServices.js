@@ -53,12 +53,12 @@ const Service = new mongoose.Schema({
             }]
     },faq:{
         type:String
-    },images:{
+    },imgs:{
         type:[{
             type:String
         }]
     },
-    documents:{
+    docs:{
         type:[{
             type:String
         }]
