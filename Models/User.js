@@ -17,20 +17,6 @@ const User = new mongoose.Schema({
     password:{
         type:String,
         required:[true,'password is required']
-    },
-    typeOfUser:{
-            isBuyer:{
-                type:Boolean,
-                default:true
-            },
-            isTalent:{
-                type:Boolean,
-                default:false
-            },
-            isAdmin:{
-                type:Boolean,
-                default:false
-            }
     }
 },{
     timestamps:true
