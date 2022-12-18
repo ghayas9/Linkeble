@@ -17,7 +17,7 @@ const Service = new mongoose.Schema({
             type:String
         }]
     },
-    pricing:{
+    pakages:{
         type:{
             basic:{
                 title:String,

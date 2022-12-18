@@ -44,6 +44,39 @@ module.exports = {
             })
         }
     },
+    UpdateServicesStepOne:async(req,res)=>{
+        const value = Joi.object({
+            title: Joi.string().max(90).required(),
+            description: Joi.string().required(),
+            catagory:Joi.string().required(),
+            subcatagory:Joi.string().required(),
+            tags:Joi.array().required()
+        }).validate(req.body)
+        if(value.error){
+            return res.status(400).json({
+                 success: false, 
+                 message:value.error.message
+            })
+        }
+        try{
+            const updateService = await Service.updateOne({_id:req.params.id},{
+                $set:req.body
+            })
+            return res.json({
+                success:true,
+                message:'saved successfully',
+                service:updateService
+            })
+        }catch(err){
+            console.log(err);
+            return res.status(500).json({
+                success:false,
+                message:'server issue please try again later',
+                err
+            })
+        }
+
+    },
     createServicesStepTwo:async(req,res)=>{
         const InnerValues = Joi.object().keys({
             title: Joi.string().required(),
@@ -67,7 +100,9 @@ module.exports = {
 
         try{
             const updateService = await Service.updateOne({_id:req.params.id},{
-                $set:req.body
+                $set:{
+                    pakages:req.body
+                }
             })
             return res.json({
                 success:true,
@@ -138,7 +173,8 @@ module.exports = {
              {
                 $set: {
                     imgs:arrayOfImgs ,
-                    docs:arrayOfDocs
+                    docs:arrayOfDocs,
+                    status:"active"
                     }
             });
 
@@ -148,7 +184,8 @@ module.exports = {
                 data:{
                     db:update_ser,
                     imgs:arrayOfImgs,
-                    docs:arrayOfDocs
+                    docs:arrayOfDocs,
+                   
                 }
             })
 
@@ -182,6 +219,54 @@ module.exports = {
             return res.status(401).json({
                 success:false,
                 message:'try again later'
+            })
+        }
+    },
+    getAllServices:async(req,res)=>{
+        try{
+            const services = await Service.find({uid:req.payload._id})
+            return res.json({
+                success:true,
+                data:services
+            })
+        }catch(err){
+            console.log(err)
+            return res.json({
+                success:true,
+                message:"try again later",
+                err
+            })
+        }
+    },
+    getOneService:async(req,res)=>{
+        try{
+            const services = await Service.findOne({uid:req.payload._id,_id:req.params.id})
+            return res.json({
+                success:true,
+                data:services
+            })
+        }catch(err){
+            console.log(err)
+            return res.json({
+                success:true,
+                message:"try again later",
+                err
+            })
+        }
+    },
+    deleteOneService:async(req,res)=>{
+        try{
+            const services = await Service.deleteOne({uid:req.payload._id,_id:req.params.id})
+            return res.json({
+                success:true,
+                message:"service has been deleted"
+            })
+        }catch(err){
+            console.log(err)
+            return res.json({
+                success:true,
+                message:"try again later",
+                err
             })
         }
     }
