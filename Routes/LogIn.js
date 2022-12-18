@@ -1,5 +1,7 @@
 const express = require('express')
-const { SignIn, SignUp, forgotPasswordStepOne, forgotPasswordStepTwo,forgotPasswordFinalStep} = require('../Controllers/LogIn')
+const { SignIn, SignUp, forgotPasswordStepOne, 
+    forgotPasswordStepTwo,
+    forgotPasswordFinalStep} = require('../Controllers/LogIn')
 const route = express.Router()
 
 route.post('/signin',SignIn)
