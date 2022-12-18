@@ -3,6 +3,7 @@ const Joi = require('joi')
 const Service = require('../Models/createServices')
 const Message = require('../Models/Message')
 const mongoose = require('mongoose')
+const  {hostUrl} = require('../Config/config')
 
 module.exports = {
     createServicesStepOne:async(req,res)=>{
@@ -122,6 +123,7 @@ module.exports = {
         const docs = req.files.docs
 
         if(imgs){
+            console.log( hostUrl)
             arrayOfImgs = imgs.map((e)=>{
                 return hostUrl+'/up/'+ e.originalname
             })
@@ -151,9 +153,11 @@ module.exports = {
             })
 
         }catch(err){
+            console.log(err)
             return res.status(500).json({
                 success:false,
-                message:'try again later'
+                message:'try again later',
+                err
             })
         }
 
