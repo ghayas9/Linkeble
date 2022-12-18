@@ -99,7 +99,9 @@ module.exports = {
 
         try{
             const updateService = await Service.updateOne({_id:req.params.id},{
-                $set:req.body
+                $set:{
+                    pakages:req.body
+                }
             })
             return res.json({
                 success:true,
