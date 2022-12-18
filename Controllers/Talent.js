@@ -5,6 +5,7 @@ const Message = require('../Models/Message')
 const mongoose = require('mongoose')
 const  {hostUrl} = require('../Config/config')
 const AccountSitting = require('../Models/accountSetting')
+const NotificationSitting = require('../Models/NotificationSetting')
 
 module.exports = {
     createServicesStepOne:async(req,res)=>{
@@ -296,6 +297,42 @@ module.exports = {
                     success:true,
                     message:'account sitting updated successfully',
                     data:newaccountsitting
+                })
+        }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                success:false,
+                message:'try again later',
+                err
+            })
+        }
+    },
+    NotificationSitting:async(req,res)=>{
+        const value = Joi.object({
+            orderupdate:Joi.boolean().required(),
+            messages:Joi.boolean().required(),
+            buyerrequest:Joi.boolean().required(),
+            accountandother:Joi.boolean().required(),
+            recieveviaemail:Joi.boolean().required()
+
+        }).validate(req.body)
+        if(value.error){
+            return res.status(400).json({
+                 success: false, 
+                 message:value.error.message
+            })
+        }
+
+        try{
+            const newnotificationsitting = await NotificationSitting.updateOne({_id:req.payload._id},
+                {
+                    $set:req.body
+                })
+
+                return res.json({
+                    success:true,
+                    message:'notification sitting updated successfully',
+                    data:newnotificationsitting
                 })
         }catch(err){
             console.log(err)

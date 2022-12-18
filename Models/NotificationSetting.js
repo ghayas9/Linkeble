@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Notification = new mongoose.Schema({
     _id:mongoose.Types.ObjectId,
-    orderUpdate:{
+    orderupdate:{
         type:Boolean,
         default:true
     },
@@ -9,15 +9,15 @@ const Notification = new mongoose.Schema({
         type:Boolean,
         default:true
     },
-    buyerRequest:{
+    buyerrequest:{
         type:Boolean,
         default:true
     },
-    accountAndOther:{
+    accountandother:{
         type:Boolean,
         default:true
     },
-    receiveViaEmail:{
+    receiveiaemail:{
         type:Boolean,
         default:true
     }
