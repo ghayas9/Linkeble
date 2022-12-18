@@ -9,6 +9,9 @@ const { createServicesStepOne,
   deleteOneService,
   UpdateServicesStepOne
 } = require('../Controllers/Talent')
+
+const {BillingAddress} = require('../Controllers/Billingaddress')
+
 const route = express.Router()
 const upload = require('../Controllers/upload')
 const {auth }= require('../Middleware/auth')
@@ -39,6 +42,10 @@ route.post('/service/step/one/:id',auth,middelware,UpdateServicesStepOne)
 route.get('/service',auth,getAllServices)
 route.get('/service/:id',auth,getOneService)
 route.delete('/service/:id',auth,deleteOneService)
+
+////// acount sitting ////////
+
+route.post('/address/add',auth,BillingAddress)
 
 
 

@@ -4,35 +4,45 @@ const BillingAddress = new mongoose.Schema({
     _id:{
         type:mongoose.Types.ObjectId,
     },
-    firstName:{
-        type:String
+    firstname:{
+        type:String,
+        defualt:""
     },
     surname:{
-        type:String
+        type:String,
+        defualt:""
     },
     company:{
-        type:String
+        type:String,
+        defualt:""
     },
     country:{
-        type:String
+        type:String,
+        defualt:""
     },
     address:{
-        type:String
+        type:String,
+        defualt:""
     },
-    postCode:{
-        type:String
+    postcode:{
+        type:String,
+        defualt:""
     },
     city:{
-        type:String
+        type:String,
+        defualt:""
     },
     phone:{
-        type:String
+        type:String,
+        defualt:""
     },
     email:{
-        type:String
+        type:String,
+        defualt:""
     },
-    otherInfo:{
-        type:String
+    otherinfo:{
+        type:String,
+        defualt:""
     }
 },{
     timestamps:true
