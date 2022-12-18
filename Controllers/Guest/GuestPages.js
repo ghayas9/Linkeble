@@ -1,5 +1,6 @@
 const category = require('../../Models/Catagory')
 const subCategory = require('../../Models/SubCatagory')
+const service = require('../../Models/createServices')
 
 module.exports = {
     getAllCategory:async(req,res)=>{
@@ -24,6 +25,22 @@ module.exports = {
             return res.status(500).json({
                 success:false,
                 message:'some thing went wrong',
+                err
+            })
+        }
+    },
+    getAllServices:async(req,res)=>{
+        try{
+            const Services = await service.find()
+            return res.json({
+                success:true,
+                data:Services
+            })
+        }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                success:false,
+                message:'try again later',
                 err
             })
         }
