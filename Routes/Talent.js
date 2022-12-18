@@ -10,14 +10,12 @@ const { createServicesStepOne,
   UpdateServicesStepOne
 } = require('../Controllers/Talent')
 const route = express.Router()
-<<<<<<< HEAD
 const upload = require('../Controllers/upload')
 const {auth }= require('../Middleware/auth')
 route.post('/service/step/one',auth,createServicesStepOne)
 route.post('/service/step/two/:id',auth,middelware,createServicesStepTwo)
 route.post('/service/step/three/:id',auth,middelware,createServicesStepThree)
-route.post('/service/step/four/:id',auth,middelware,
-=======
+route.post('/service/step/four/:id',auth,middelware,createServicesStepFour)
 // const upload = require('../Controllers/upload')
 
 
@@ -26,7 +24,6 @@ route.post('/service/step/one',createServicesStepOne)
 route.post('/service/step/two/:id',middelware,createServicesStepTwo)
 route.post('/service/step/three/:id',middelware,createServicesStepThree)
 route.post('/service/step/four/:id',middelware,
->>>>>>> 1a665f499612fc77fcd3b16a15e910b0cb7a7037
 upload.fields([{
     name: 'imgs', maxCount: 3
   }, {
