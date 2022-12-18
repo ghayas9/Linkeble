@@ -4,7 +4,7 @@ const accountSetting = new mongoose.Schema({
     _id:{
         type:mongoose.Types.ObjectId,
     },
-    fullName:{
+    fullname:{
         type:String
     },
     about:{

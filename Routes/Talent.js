@@ -7,7 +7,8 @@ const { createServicesStepOne,
   getAllServices,
   getOneService,
   deleteOneService,
-  UpdateServicesStepOne
+  UpdateServicesStepOne,
+  AccountSitting
 } = require('../Controllers/Talent')
 
 const {BillingAddress} = require('../Controllers/Billingaddress')
@@ -46,6 +47,7 @@ route.delete('/service/:id',auth,deleteOneService)
 ////// acount sitting ////////
 
 route.post('/address/add',auth,BillingAddress)
+route.post('/account/sitting/add',auth,AccountSitting)
 
 
 

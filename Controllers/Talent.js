@@ -4,6 +4,7 @@ const Service = require('../Models/createServices')
 const Message = require('../Models/Message')
 const mongoose = require('mongoose')
 const  {hostUrl} = require('../Config/config')
+const AccountSitting = require('../Models/accountSetting')
 
 module.exports = {
     createServicesStepOne:async(req,res)=>{
@@ -266,6 +267,41 @@ module.exports = {
             return res.json({
                 success:true,
                 message:"try again later",
+                err
+            })
+        }
+    },
+    AccountSitting:async(req,res)=>{
+
+        const value = Joi.object({
+            fullname:Joi.string().required(),
+            email:Joi.string().required(),
+            onlinestatus:Joi.string().required()
+
+        }).validate(req.body)
+        if(value.error){
+            return res.status(400).json({
+                 success: false, 
+                 message:value.error.message
+            })
+        }
+
+        try{
+            const newaccountsitting = await AccountSitting.updateOne({_id:req.payload._id},
+                {
+                    $set:req.body
+                })
+
+                return res.json({
+                    success:true,
+                    message:'account sitting updated successfully',
+                    data:newaccountsitting
+                })
+        }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                success:false,
+                message:'try again later',
                 err
             })
         }
