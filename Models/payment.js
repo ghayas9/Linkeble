@@ -6,9 +6,7 @@ const paymentSchema = new mongoose.Schema({
     name:String,
     cardNumber:String,
     Method:String,
-    amount:Number,
-    purpose:String,
-    
+    amount:Number
 
 },{timestamps:true})
 
