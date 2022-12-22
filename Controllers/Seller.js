@@ -1,1 +1,0 @@
-const sellerreview = require('../Models/sellerReview')
