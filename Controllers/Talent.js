@@ -84,7 +84,6 @@ module.exports = {
             title: Joi.string().required(),
             description: Joi.string().required(),
             deliver:Joi.number().required(),
-            numberofscreen:Joi.string().required(),
             revisions:Joi.number().required(),
             price:Joi.number().required()
         })
@@ -152,22 +151,26 @@ module.exports = {
     },
     createServicesStepFour:async(req,res)=>{
         try{
-
+            
+            
         var arrayOfImgs = []
         var arrayOfDocs = []
 
         const imgs = req.files.imgs
         const docs = req.files.docs
 
+        console.log(imgs)
+        console.log(docs)
+
         if(imgs){
             console.log( hostUrl)
             arrayOfImgs = imgs.map((e)=>{
-                return hostUrl+'/up/'+ e.originalname
+                return hostUrl+'/up/'+ e.filename
             })
         }
         if(docs){
             arrayOfDocs = docs.map((e)=>{
-                return hostUrl+'/up/'+ e.originalname
+                return hostUrl+'/up/'+ e.filename
             })
         }
 
