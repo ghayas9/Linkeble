@@ -27,9 +27,10 @@ module.exports = {
                 newOrder.service_id= mongoose.Types.ObjectId(req.body.service_id)
                 newOrder.talent_id = mongoose.Types.ObjectId(get_service.uid.toHexString())
                 newOrder.buyer_id = mongoose.Types.ObjectId(req.payload._id)
-                newOrder.deliverydate  = new Date(Date.now() + get_service[`${req.body.package_name}`]['deliver']*24*60*60*1000)
+                newOrder.deliverydate  = new Date(Date.now() + get_service.pakages[`${req.body.package_name}`]['deliver']*24*60*60*1000)
                 newOrder.status = 'incomplete'
-                newOrder.buget = get_service[`${req.body.package_name}`]['price']
+                newOrder.buget = get_service.pakages[`${req.body.package_name}`]['price']
+                newOrder.pkg = req.body.package_name
 
                 const crOrder = await newOrder.save()
                 return res.json({

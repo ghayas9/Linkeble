@@ -12,7 +12,7 @@ module.exports = {
             name:Joi.string().required(),
             exp_date:Joi.string().required(),
             cvv:Joi.string().required(),
-            order_id:string().required()
+            order_id:Joi.string().required()
         }).validate(req.body)
 
         if(value.error){

@@ -2,24 +2,25 @@ const mongoose = require('mongoose')
 
 const orderSchema = new mongoose.Schema({
     _id: mongoose.Types.ObjectId,
-    service_id:mongoose.Types.ObjectId,
-    talent_id:mongoose.Types.ObjectId,
-    buyer_id:mongoose.Types.ObjectId,
-    buget:{type:Number},
-    deliverydate:{type:Date},
+    service_id: { type: mongoose.Schema.Types.ObjectId, ref: 'services' },
+    talent_id: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    buyer_id: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    buget: { type: Number },
+    deliverydate: { type: Date },
+    pkg: { type: String },
 
     /////new 1/////
-    payment_id:mongoose.Types.ObjectId,
-    status:{type:String},
+    payment_id: { type: mongoose.Schema.Types.ObjectId, ref: 'payment' },
+    status: { type: String },
     ////new 1///
 
     ///new 2///
-    file_link:{type:String},
-    title:{type:String},
-    detail:{type:String},
+    file_link: { type: String },
+    title: { type: String },
+    detail: { type: String },
     ///new 2//
 
-    isAccepted:{type:Boolean,default:true}
-},{timestamp:true})
+    isAccepted: { type: Boolean, default: true }
+}, { timestamp: true })
 
-module.exports = mongoose.model('order',orderSchema)
+module.exports = mongoose.model('order', orderSchema)

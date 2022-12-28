@@ -4,7 +4,8 @@ const User = new mongoose.Schema({
         type:mongoose.Types.ObjectId,
     },
     profile:{
-        type:String
+        type:String,
+        default:'http://localhost:9000/profile/user.png'
     },
     userName:{
         type:String

@@ -18,6 +18,7 @@ const route = express.Router()
 
 const {auth }= require('../Middleware/auth')
 const { upload } = require('../Controllers/upload')
+const { getOneOrder , getAllOrders, deleteOneOrder} = require('../Controllers/Talent/Order')
 
 
 
@@ -48,6 +49,12 @@ route.post('/service/step/one/:id',auth,middelware,UpdateServicesStepOne)
 route.get('/service',auth,getAllServices)
 route.get('/service/:id',auth,getOneService)
 route.delete('/service/:id',auth,deleteOneService)
+
+//////////Orders//////////
+route.get('/talent/order/:id',auth,getOneOrder)
+route.get('/talent/order',auth,getAllOrders)
+route.delete('/talent/order/:id',auth,deleteOneOrder)
+//////////Orders//////////
 
 ////// acount sitting ////////
 
