@@ -17,11 +17,7 @@ const {BillingAddress} = require('../Controllers/Billingaddress')
 const route = express.Router()
 const upload = require('../Controllers/upload')
 const {auth }= require('../Middleware/auth')
-route.post('/service/step/one',auth,createServicesStepOne)
-route.post('/service/step/two/:id',auth,middelware,createServicesStepTwo)
-route.post('/service/step/three/:id',auth,middelware,createServicesStepThree)
-route.post('/service/step/four/:id',auth,middelware,createServicesStepFour)
-// const upload = require('../Controllers/upload')
+
 
 
 /////Create services/////
@@ -50,6 +46,7 @@ route.delete('/service/:id',auth,deleteOneService)
 route.post('/address/add',auth,BillingAddress)
 route.post('/account/sitting/add',auth,AccountSitting)
 route.post('/notification/sitting/add',auth,NotificationSitting)
+// route.post('/review/:id',auth,Review)
 
 
 
