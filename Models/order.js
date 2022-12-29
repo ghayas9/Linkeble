@@ -18,6 +18,12 @@ const orderSchema = new mongoose.Schema({
     file_link: { type: String },
     title: { type: String },
     detail: { type: String },
+    delivery: {
+        type:{
+            detail:String,
+            src:String
+        }
+    },
     ///new 2//
 
     isAccepted: { type: Boolean, default: true }

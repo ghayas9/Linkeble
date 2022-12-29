@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const  {hostUrl} = require('../Config/config')
 const AccountSitting = require('../Models/accountSetting')
 const NotificationSitting = require('../Models/NotificationSetting')
+const Order = require('../Models/order')
 
 module.exports = {
     createServicesStepOne:async(req,res)=>{
@@ -359,15 +360,28 @@ module.exports = {
         }
         try{
             if(req.file){
-                if(req.file.source){
+                
                  const url = hostUrl + '/src/'+ req.file.filename
                  console.log(url)
+
+                 const neworder = await Order.updateOne({talent_id:req.payload._id,_id:req.params.id},
+                 {
+                    $set:{
+                        deliver:{
+                            detail:req.body.detail,
+                            src:url
+                        }
+                    }
+                 })
                  res.json({
                     success:true,
                     message:'Order Deliver Successfully',
-                    data:{url}
+                    data:{
+                        url,
+                        detail:req.body.detail
+                    }
                  })   
-                }
+               
             }
         }catch(err){
             console.log(err)

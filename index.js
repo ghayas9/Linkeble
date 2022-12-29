@@ -27,6 +27,7 @@ app.get('/',(req,res)=>{
 // }));
 app.use('/up', express.static(path.join(__dirname,'./Public')))
 app.use('/profile', express.static(path.join(__dirname,'./Public/Profile')))
+app.use('/src', express.static(path.join(__dirname,'./Public/Source')))
 app.use(require('./Routes/rootRoute'))
 
 app.listen(PORT,()=>{
