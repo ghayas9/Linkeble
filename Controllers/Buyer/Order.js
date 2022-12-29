@@ -6,7 +6,7 @@ module.exports = {
             const find_order = await order.findOne({
                 _id:req.params.id,
                 buyer_id:req.payload._id
-            }).populate('service_id')
+            }).populate("buyer_id").populate("service_id").populate("talent_id")
 
             return res.json({
                 success:true,
@@ -24,7 +24,7 @@ module.exports = {
         try{
             const find_orders = await order.find({
                 buyer_id:req.payload._id
-            })
+            }).populate("buyer_id").populate("service_id").populate("talent_id")
 
             return res.json({
                 success:true,

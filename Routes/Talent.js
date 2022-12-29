@@ -9,7 +9,8 @@ const { createServicesStepOne,
   deleteOneService,
   UpdateServicesStepOne,
   AccountSitting,
-  NotificationSitting
+  NotificationSitting,
+  OrderDelivery
 } = require('../Controllers/Talent')
 
 const {BillingAddress} = require('../Controllers/Billingaddress')
@@ -17,7 +18,7 @@ const {BillingAddress} = require('../Controllers/Billingaddress')
 const route = express.Router()
 
 const {auth }= require('../Middleware/auth')
-const { upload } = require('../Controllers/upload')
+const { upload,upload_src } = require('../Controllers/upload')
 const { getOneOrder , getAllOrders, deleteOneOrder} = require('../Controllers/Talent/Order')
 
 
@@ -31,8 +32,6 @@ route.post('/service/step/four/:id',auth,middelware,upload.fields([{
 }, {
   name: 'docs', maxCount: 3
 }]) ,createServicesStepFour)
-
-
 
 // fields([{
 //   name: 'imgs', maxCount: 3
@@ -54,6 +53,7 @@ route.delete('/service/:id',auth,deleteOneService)
 route.get('/talent/order/:id',auth,getOneOrder)
 route.get('/talent/order',auth,getAllOrders)
 route.delete('/talent/order/:id',auth,deleteOneOrder)
+route.post('/talent/order/deliver/:id',auth,upload_src.single('src'),OrderDelivery)
 //////////Orders//////////
 
 ////// acount sitting ////////

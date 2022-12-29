@@ -26,6 +26,7 @@ app.get('/',(req,res)=>{
 //     createParentPath: true
 // }));
 app.use('/up', express.static(path.join(__dirname,'./Public')))
+app.use('/profile', express.static(path.join(__dirname,'./Public/Profile')))
 app.use(require('./Routes/rootRoute'))
 
 app.listen(PORT,()=>{

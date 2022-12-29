@@ -345,6 +345,38 @@ module.exports = {
                 err
             })
         }
+        
+    },
+    OrderDelivery:async(req,res)=>{
+        const value = Joi.object({
+            detail: Joi.string().required(),
+        }).validate(req.body)
+        if(value.error){
+            return res.status(400).json({
+                 success: false, 
+                 message:value.error.message
+            })
+        }
+        try{
+            if(req.file){
+                if(req.file.source){
+                 const url = hostUrl + '/src/'+ req.file.filename
+                 console.log(url)
+                 res.json({
+                    success:true,
+                    message:'Order Deliver Successfully',
+                    data:{url}
+                 })   
+                }
+            }
+        }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                success:false,
+                message:'try again later',
+                err
+            })
+        }
     }
     
 }
