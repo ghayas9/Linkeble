@@ -367,13 +367,14 @@ module.exports = {
                  const neworder = await Order.updateOne({talent_id:req.payload._id,_id:req.params.id},
                  {
                     $set:{
-                        deliver:{
+                        delivery:{
                             detail:req.body.detail,
                             src:url
-                        }
+                        },
+                        status:"delivered"
                     }
                  })
-                 res.json({
+                 return res.json({
                     success:true,
                     message:'Order Deliver Successfully',
                     data:{
@@ -383,6 +384,11 @@ module.exports = {
                  })   
                
             }
+
+            return res.status(400).json({
+                success:false,
+                message:"please provide zip file"
+            })
         }catch(err){
             console.log(err)
             return res.status(500).json({
