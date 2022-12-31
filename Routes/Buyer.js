@@ -1,8 +1,10 @@
 const express = require('express')
 const { getAllServices ,getOneService } = require('../Controllers/buyer')
 const { getOneOrder ,getAllOrders, deleteOneOrder } = require('../Controllers/Buyer/Order')
+const {Review, getOneReview, getAllReview, deleteReview, updateReview, ReviewMiddleware} = require('../Controllers/Buyer/Review')
 const { payments } = require('../Controllers/Orders/Payments')
 const { placeOrderStepOne, PlaceOrderStepThree } = require('../Controllers/Orders/PlaceOrder')
+
 const route = express.Router()
 
 
@@ -27,5 +29,15 @@ route.delete('/buyer/order/:id',auth,deleteOneOrder)
 route.get('/buyer/service',auth,getAllServices)
 route.get('/buyer/service/:id',auth,getOneService)
 /////////buyer Home pages/////////
+
+///////// Review //////////////
+
+route.post('/buyer/review/:id',auth,Review)
+route.get('/buyer/review/:id',auth,ReviewMiddleware,getOneReview)
+route.get('/buyer/review',auth,getAllReview)
+route.delete('/buyer/review/:id',auth,ReviewMiddleware,deleteReview)
+route.put('/buyer/review/:id',auth,ReviewMiddleware,updateReview)
+
+////////////// Review //////////////
 
 module.exports = route
