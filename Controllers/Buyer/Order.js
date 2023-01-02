@@ -56,5 +56,29 @@ module.exports = {
                 message:'try again later'
             })
         }
+    },
+    AcceptOrder:async(req,res)=>{
+        try{
+            const find_order = await order.updateOne({
+                _id:req.params.id,
+                buyer_id:req.payload._id
+            },{
+                $set:{
+                    status:"completed",
+                    isAccepted:true
+                }
+            })
+
+            return res.json({
+                success:true,
+                message:"order Accepted please leave your review"
+            })
+        }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                success:false,
+                message:'try again later'
+            })
+        }
     }
 }

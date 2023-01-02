@@ -27,7 +27,7 @@ const orderSchema = new mongoose.Schema({
     },
     ///new 2//
 
-    isAccepted: { type: Boolean, default: true }
+    isAccepted: { type: Boolean, default: false }
 }, { timestamps:true })
 
 module.exports = mongoose.model('order', orderSchema)

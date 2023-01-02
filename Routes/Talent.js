@@ -20,6 +20,8 @@ const route = express.Router()
 const {auth }= require('../Middleware/auth')
 const { upload,upload_src } = require('../Controllers/upload')
 const { getOneOrder , getAllOrders, deleteOneOrder} = require('../Controllers/Talent/Order')
+const { AboutTalent } = require('../Controllers/Talent/About')
+const { getAllServiceReview, getAllReview } = require('../Controllers/Talent/Review')
 
 
 
@@ -63,6 +65,16 @@ route.post('/account/sitting/add',auth,AccountSitting)
 route.post('/notification/sitting/add',auth,NotificationSitting)
 
 
+
+///////////////////Review///////////////
+// route.get('/talent/review/:id',auth,getOneReview)
+route.get('/talent/review',auth,getAllReview)
+///////////////////Review///////////////
+
+route.get('/talent',auth,AboutTalent)
+
+
+route.get('/talent/service/review/:id',getAllServiceReview)
 
 //////////////////////
 route.post('/up',(req,res)=>{

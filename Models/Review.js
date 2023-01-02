@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
 const review = new mongoose.Schema({
     _id:mongoose.Types.ObjectId,
+    service_id:{ type: mongoose.Schema.Types.ObjectId, ref: 'services' },
     by:{
-        type:mongoose.Types.ObjectId
+        type:{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }
     },
     for:{
-        type:mongoose.Types.ObjectId
+        type:{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }
     },
     review:{
         type:String

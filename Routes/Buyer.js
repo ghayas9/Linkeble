@@ -1,12 +1,11 @@
 const express = require('express')
 const { getAllServices ,getOneService } = require('../Controllers/buyer')
-const { getOneOrder ,getAllOrders, deleteOneOrder } = require('../Controllers/Buyer/Order')
+const { getOneOrder ,getAllOrders, deleteOneOrder, AcceptOrder } = require('../Controllers/Buyer/Order')
 const {Review, getOneReview, getAllReview, deleteReview, updateReview, ReviewMiddleware} = require('../Controllers/Buyer/Review')
 const { payments } = require('../Controllers/Orders/Payments')
 const { placeOrderStepOne, PlaceOrderStepThree } = require('../Controllers/Orders/PlaceOrder')
 
 const route = express.Router()
-
 
 const {auth }= require('../Middleware/auth')
 
@@ -17,13 +16,13 @@ route.post('/place/order/step/three/:id',auth,PlaceOrderStepThree)
 ///get order///
 route.get('/buyer/order/:id',auth,getOneOrder)
 route.get('/buyer/order',auth,getAllOrders)
+
+route.post('/buyer/order/completed/:id',auth,AcceptOrder)
 ///get order///
 
 ///delete order///
 route.delete('/buyer/order/:id',auth,deleteOneOrder)
 ///delete order///
-
-
 
 /////////buyer Home pages/////////
 route.get('/buyer/service',auth,getAllServices)

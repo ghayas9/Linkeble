@@ -1,5 +1,17 @@
 const mongoose = require('mongoose')
 const User = new mongoose.Schema({
+    name:{
+        type:String,
+        default:'GHAYAS'
+    },
+    loc:{
+        type:String,
+        default:'KPK Peshawar'
+    },
+    status:{
+        type:String,
+        default:'client satisfiction is my main moto'
+    },
     _id:{
         type:mongoose.Types.ObjectId,
     },
