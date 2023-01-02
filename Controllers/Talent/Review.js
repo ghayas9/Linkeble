@@ -6,7 +6,7 @@ const Joi = require('joi')
 module.exports = {
     getAllReview:async(req,res)=>{
         try{
-            const review = await Review.find({for:req.payload._id}).populate("by")
+            const review = await Review.find({createdfor:req.payload._id}).populate("by")
             var rating = 0
             var total = 0
             var per = 0

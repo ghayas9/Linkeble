@@ -23,8 +23,8 @@ module.exports = {
                 const newreview = new Review()
                 newreview._id = mongoose.Types.ObjectId()
                 newreview.service_id = mongoose.Types.ObjectId(req.params.id)
-                newreview.by = mongoose.Types.ObjectId(req.payload._id)
-                newreview.for = mongoose.Types.ObjectId(nservice.uid.toHexString()) 
+                newreview.createdby = mongoose.Types.ObjectId(req.payload._id)
+                newreview.createdfor = mongoose.Types.ObjectId(nservice.uid.toHexString()) 
                 newreview.review = req.body.review
                 newreview.rating = req.body.rating
 
@@ -54,7 +54,7 @@ module.exports = {
 
     getAllReview : async(req,res)=>{
         try{
-            const allreview = await Review.find({buyer_id:req.payload._id})
+            const allreview = await Review.find({createdby:req.payload._id})
 
             return res.json({
                 success:true,
@@ -92,7 +92,7 @@ module.exports = {
 
     deleteReview : async(req,res)=>{
         try{
-            const deletereview = await Review.deleteOne({buyer_id:req.payload._id,_id:req.params.id})
+            const deletereview = await Review.deleteOne({createdby:req.payload._id,_id:req.params.id})
 
             return res.json({
                 success:true,
@@ -111,7 +111,7 @@ module.exports = {
 
     updateReview : async(req,res)=>{
         try{
-            const updatereview = await Review.updateOne({buyer_id:req.payload._id,_id:req.params.id},
+            const updatereview = await Review.updateOne({createdby:req.payload._id,_id:req.params.id},
             {
                 $set:{
                 review : req.body.review,
@@ -138,12 +138,12 @@ module.exports = {
 
     ReviewMiddleware : async(req,res,next)=>{
         try{
-            const review = await Review.findOne({buyer_id:req.payload._id,_id:req.params.id})
+            const review = await Review.findOne({createdby:req.payload._id,_id:req.params.id})
 
             if(review){
                 next()
             }else{
-                return res.json({
+                return res.status(404).json({
                     success:false,
                     message:'review not found'
                 })

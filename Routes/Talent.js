@@ -68,7 +68,7 @@ route.post('/notification/sitting/add',auth,NotificationSitting)
 
 ///////////////////Review///////////////
 // route.get('/talent/review/:id',auth,getOneReview)
-route.get('/talent/review',auth,getAllReview)
+route.get('/talent/review',getAllReview)
 ///////////////////Review///////////////
 
 route.get('/talent',auth,AboutTalent)
