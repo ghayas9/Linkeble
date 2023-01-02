@@ -20,10 +20,12 @@ const route = express.Router()
 const {auth }= require('../Middleware/auth')
 const { upload,upload_src } = require('../Controllers/upload')
 const { getOneOrder , getAllOrders, deleteOneOrder} = require('../Controllers/Talent/Order')
-const { AboutTalent } = require('../Controllers/Talent/About')
+const { AboutTalent, UpdateNameAndProfile } = require('../Controllers/Talent/About')
 const { getAllServiceReview, getAllReview } = require('../Controllers/Talent/Review')
 
-
+///////profile//////
+route.put('/talent/update',auth,UpdateNameAndProfile)
+///////profile//////
 
 /////Create services/////
 route.post('/service/step/one',auth,createServicesStepOne)
@@ -68,7 +70,7 @@ route.post('/notification/sitting/add',auth,NotificationSitting)
 
 ///////////////////Review///////////////
 // route.get('/talent/review/:id',auth,getOneReview)
-route.get('/talent/review',getAllReview)
+route.get('/talent/review',auth,getAllReview)
 ///////////////////Review///////////////
 
 route.get('/talent',auth,AboutTalent)

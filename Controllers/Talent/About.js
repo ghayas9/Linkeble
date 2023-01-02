@@ -3,6 +3,8 @@ const order = require('../../Models/order')
 const service = require('../../Models/createServices')
 const user = require('../../Models/User')
 
+const joi = require('joi')
+
 
 
 module.exports = {
@@ -24,6 +26,38 @@ module.exports = {
             return res.status(500).json({
                 success:false,
                 message:"try again later"
+            })
+        }
+    },
+    UpdateNameAndProfile:async(req,res)=>{
+        const value = joi.object({
+            name: joi.string().required(),
+            status: joi.string().required(),
+            loc: joi.string().required()
+        }).validate(req.body)
+        if (value.error) {
+            return res.status(400).json({
+                success: false,
+                message: value.error.message
+            })
+        }
+        try{
+            const UserUpdate = await user.updateOne({
+                _id:req.payload._id
+            },{
+                $set:req.body
+            })
+
+            return res.json({
+                success:true,
+                message:"profile updated Successfully"
+            })
+        }catch(err){
+            console.log(err)
+            return res.status(500).json({
+                success:false,
+                message:"try again later",
+                err
             })
         }
     }
