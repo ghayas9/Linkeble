@@ -20,11 +20,12 @@ const route = express.Router()
 const {auth }= require('../Middleware/auth')
 const { upload,upload_src } = require('../Controllers/upload')
 const { getOneOrder , getAllOrders, deleteOneOrder} = require('../Controllers/Talent/Order')
-const { AboutTalent, UpdateNameAndProfile } = require('../Controllers/Talent/About')
+const { AboutTalent, UpdateNameAndProfile, updateNotification } = require('../Controllers/Talent/About')
 const { getAllServiceReview, getAllReview } = require('../Controllers/Talent/Review')
 
 ///////profile//////
 route.put('/talent/update',auth,UpdateNameAndProfile)
+route.put('/talent/notification',auth,updateNotification)
 ///////profile//////
 
 /////Create services/////
