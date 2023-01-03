@@ -6,7 +6,7 @@ const Joi = require('joi')
 module.exports = {
     getAllReview:async(req,res)=>{
         try{
-            const review = await Review.find({createdfor:req.payload._id}).populate("by")
+            const review = await Review.find({createdfor:req.payload._id}).populate("createdby")
             var rating = 0
             var total = 0
             var per = 0
@@ -34,7 +34,7 @@ module.exports = {
     },
     getAllServiceReview:async(req,res)=>{
         try{
-            const review = await Review.find({service_id:req.params.id}).populate("by").populate("for")
+            const review = await Review.find({service_id:req.params.id}).populate("createdby").populate("createdfor")
             return res.json({
                 success:true,
                 data:review
