@@ -1,5 +1,6 @@
 const service = require('../../Models/createServices')
 const Review = require('../../Models/Review')
+const order = require('../../Models/order')
 const mongoose = require('mongoose')
 const Joi = require('joi')
 
@@ -17,28 +18,44 @@ module.exports = {
             })
         }
         try{
-            const nservice = await service.findOne({_id:req.params.id})
+            const fnorder = await order.findOne({_id:req.params.id})
+            const  fnrev= await Review.findOne({_id:req.params.id})
+            if(fnorder){
 
-            if(nservice){
+                if(fnrev){
+                    const updateReview = await Review.updateOne({_id:req.params.id},{
+                        $set:req.body
+                    })
+                    return res.json({
+                        success:true,
+                        message:'review updated',
+                        data:updateReview
+                    })
+                }else{
                 const newreview = new Review()
-                newreview._id = mongoose.Types.ObjectId()
-                newreview.service_id = mongoose.Types.ObjectId(req.params.id)
+                newreview._id = fnorder._id
+                newreview.service_id = fnorder.service_id
                 newreview.createdby = mongoose.Types.ObjectId(req.payload._id)
-                newreview.createdfor = mongoose.Types.ObjectId(nservice.uid.toHexString()) 
+                newreview.createdfor = fnorder.talent_id
                 newreview.review = req.body.review
                 newreview.rating = req.body.rating
-
+                console.log(newreview)
                 const crreview = await newreview.save()
-
-            return res.json({
-                success:true,
-                message:'review saved',
-                data:crreview
-            })
+                const service_rev = await service.updateOne({_id:req.params.id},{
+                    $push:{
+                        review:crreview._id
+                    }
+                })
+                return res.json({
+                    success:true,
+                    message:'review saved',
+                    data:crreview
+                })
+                }
             }else{
                 return res.json({
                     success:false,
-                    message:'Can not find the service'
+                    message:'Can not find the order'
                 })
             }
             

@@ -67,8 +67,11 @@ const Service = new mongoose.Schema({
         type:String,
         num:['active','pause','panding','draft','rejected'],
         default:'draft'
-    }
-
+    },
+    review:{ type:[
+       { type: mongoose.Schema.Types.ObjectId, ref: 'review'}
+    ],
+default:[] }
 },{
     timestamps:true
 })

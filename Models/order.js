@@ -5,6 +5,7 @@ const orderSchema = new mongoose.Schema({
     service_id: { type: mongoose.Schema.Types.ObjectId, ref: 'services' },
     talent_id: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
     buyer_id: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    review: { type: mongoose.Schema.Types.ObjectId, ref: 'review' },
     buget: { type: Number },
     deliverydate: { type: Date },
     pkg: { type: String },
