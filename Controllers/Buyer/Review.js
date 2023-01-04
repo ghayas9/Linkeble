@@ -41,7 +41,7 @@ module.exports = {
                 newreview.rating = req.body.rating
                 console.log(newreview)
                 const crreview = await newreview.save()
-                const service_rev = await service.updateOne({_id:req.params.id},{
+                const service_rev = await service.updateOne({_id:fnorder.service_id.toHexString()},{
                     $push:{
                         review:crreview._id
                     }
