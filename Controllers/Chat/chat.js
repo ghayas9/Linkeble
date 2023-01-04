@@ -159,9 +159,20 @@ module.exports = {
 
             const crms = await crnewchat.save()
 
+            const newCht  = await chat.findOne({_id:crms._id.toHexString()}).populate([
+                {
+                    path:"createdby",
+                    model:"user"
+                },
+                {
+                    path:"createdfor",
+                    model:"user"
+                }
+                ])
+
             return res.json({
                 success:true,
-                data:crms
+                data:newCht
             })
 
         }catch(err){
