@@ -40,8 +40,8 @@ module.exports = {
         try{
             const ChatList = await chatlist.findOne({
                 $or:[
-                    {createdby:req.params.id,createdfor:req.payload._id},
-                    {createdfor:req.params.id,createdby:req.payload._id},
+                    { $and: [{createdby:req.params.id}, {createdfor:req.payload._id}] },
+                    { $and: [{createdfor:req.params.id}, {createdby:req.payload._id}] }
                 ]
             })
 
