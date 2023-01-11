@@ -12,6 +12,7 @@ const User = require('../Models/User')
 const accountSetting = require('../Models/accountSetting')
 const NotificationSetting = require('../Models/NotificationSetting')
 const BillingAddress = require('../Models/BillingAddress')
+const Earn = require('../Models/Earning')
 const sendOTPbyEmail = require('./Email/sendOTPbyEmail')
 /////////////MODELS/////////////
 
@@ -49,13 +50,16 @@ module.exports = {
                     const createAccountSetting = new accountSetting()
                     const creactNotificationSetting = new NotificationSetting()
                     const createBillingAddress =new BillingAddress()
+                    const createEarn =new Earn()
                     //******************************//
                     createAccountSetting._id=mongoose.Types.ObjectId(creatuser._id)
                     creactNotificationSetting._id=mongoose.Types.ObjectId(creatuser._id)
                     createBillingAddress._id=mongoose.Types.ObjectId(creatuser._id)
+                    createEarn._id=mongoose.Types.ObjectId(creatuser._id)
                     await createAccountSetting.save()
                     await creactNotificationSetting.save()
                     await createBillingAddress.save()
+                    await createEarn.save()
                     //account setting config..
                     return res.json({
                         success:true,

@@ -3,7 +3,7 @@ const order = require('../../Models/order')
 const service = require('../../Models/createServices')
 const user = require('../../Models/User')
 const Notification = require('../../Models/NotificationSetting')
-
+const Earn = require('../../Models/Earning')
 const joi = require('joi')
 
 
@@ -13,17 +13,21 @@ module.exports = {
         try{
             const User = await user.findOne({_id:req.payload._id})
             const Review = await review.find({for:req.payload._id})
-            const completedOrders = await order.find({talent_id:req.paylaod._id,status:"completed"})
+            const completedOrders = await order.find({talent_id:req.payload._id,status:"completed"})
+            const earn = await Earn.findOne({_id:req.payload._id})
+        
             return res.json({
                 success:true,
                 data:{
                     user:User,
                     responseTime:"30 mints",
                     review:Review,
+                    earn,
                     completedOrders : completedOrders
                 }
             })
         }catch(err){
+            console.log(err)
             return res.status(500).json({
                 success:false,
                 message:"try again later"

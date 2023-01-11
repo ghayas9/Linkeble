@@ -22,6 +22,7 @@ const { upload,upload_src } = require('../Controllers/upload')
 const { getOneOrder , getAllOrders, deleteOneOrder} = require('../Controllers/Talent/Order')
 const { AboutTalent, UpdateNameAndProfile, updateNotification } = require('../Controllers/Talent/About')
 const { getAllServiceReview, getAllReview } = require('../Controllers/Talent/Review')
+const { getEarning } = require('../Controllers/Talent/Earning')
 
 ///////profile//////
 route.put('/talent/update',auth,UpdateNameAndProfile)
@@ -78,6 +79,12 @@ route.get('/talent',auth,AboutTalent)
 
 
 route.get('/talent/service/review/:id',getAllServiceReview)
+
+
+
+//Earning detail//
+route.get('/talent/earn',auth,getEarning)
+//Earning detail//
 
 //////////////////////
 route.post('/up',(req,res)=>{
