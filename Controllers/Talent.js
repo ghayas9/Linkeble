@@ -360,8 +360,7 @@ module.exports = {
         }
         try{
             if(req.file){
-                
-                 const url = hostUrl + '/src/'+ req.file.filename
+                 const url = req.file.filename
                  console.log(url)
 
                  const neworder = await Order.updateOne({talent_id:req.payload._id,_id:req.params.id},

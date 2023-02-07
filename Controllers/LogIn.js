@@ -181,7 +181,8 @@ module.exports = {
                         email:user.email,
                         otp
                     },forgetKey)
-                    await sendOTPbyEmail(otp,req.body.email)
+                    // await sendOTPbyEmail(otp,req.body.email)
+                    console.log(otp)
                     return res.json({
                         success:true,
                         token
@@ -202,10 +203,6 @@ module.exports = {
                     err
                 })
             }
-            
-        //DATABASE
-
-        //SEND EMAIL
     },
     forgotPasswordStepTwo:async(req,res)=>{
         const value = Joi.object({
@@ -220,20 +217,37 @@ module.exports = {
         }
 
         try{ 
+            jwt.verify(req.body.token,forgetKey,(err,data)=>{
+                    if(err){
+                        return res.status(400).json({
+                            sucess:false,
+                            message:"some thing went wrong",
+                            err
+                        })
+                    }
 
+                    if(data.otp==req.body.otp){
+                        const token = jwt.sign({
+                            id:data.id,
+                            email:data.email,
+                            otpVerify:true
+                        },forgetKey)
+                        return res.json({
+                            success:true,
+                            message:'otp conform',
+                            token
+                        })
+                    }
+            })
         }catch(err){
             return res.status(400).json({
                 success:false,
                 message:'some thing went wrong'
             })
         }   
-        //  token 
-        //  otp 
-        // DATABASE
-        // code
-        // DATABASE
     },
     forgotPasswordFinalStep:async(req,res)=>{
+        
         const value = Joi.object({
             passwod:Joi.string().required(),
             conformpassword: Joi.any().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } }),
@@ -245,8 +259,38 @@ module.exports = {
             })
         }
 
-        //DATABASE
-        // code
-        //DATABASE
-    }
+        
+        jwt.verify(req.params.token,forgetKey,async(err,data)=>{
+            if(err){
+                return res.status(400).json({
+                    sucess:false,
+                    message:"some thing went wrong",
+                    err
+                })
+            }
+
+            if(data.otpVerify){
+                try{
+                req.body.password = bcrypt.hashSync(req.body.password, salt)
+                const up = await User.updateOne({_id:data.id},{
+                    $set:{
+                        password:req.body.password
+                    }
+                }) 
+                return res.json({
+                    success:true,
+                    message:'password has been changed',
+                })
+
+            }catch(err){
+                return res.status(400).json({
+                    success:false,
+                    message:'some thing went wrong',
+                })
+            }
+            }
+    })
+
+
+}
 }

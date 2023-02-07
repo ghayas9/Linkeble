@@ -14,13 +14,14 @@ app.use(cors({
     origin:'*'
 })
 );
+app.use(express.static(__dirname + '/Public/build'))
 app.use(bodyParser.json())
 // app.use(multer().any())
-app.get('/',(req,res)=>{
-    return res.json({
-        success:true
-    })
-})
+// app.get('/',(req,res)=>{
+//     return res.json({
+//         success:true
+//     })
+// })
 // enable files upload
 // app.use(fileUpload({
 //     createParentPath: true
@@ -29,6 +30,11 @@ app.use('/up', express.static(path.join(__dirname,'./Public')))
 app.use('/profile', express.static(path.join(__dirname,'./Public/Profile')))
 app.use('/src', express.static(path.join(__dirname,'./Public/Source')))
 app.use(require('./Routes/rootRoute'))
+
+
+app.get('*',(req,res)=>{
+    res.sendFile(path.resolve(__dirname,'Public','build','index.html'))
+})
 
 app.listen(PORT,()=>{
     console.log('http://localhost:'+PORT)

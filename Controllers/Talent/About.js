@@ -12,9 +12,20 @@ module.exports = {
     AboutTalent:async(req,res)=>{
         try{
             const User = await user.findOne({_id:req.payload._id})
-            const Review = await review.find({for:req.payload._id})
+            const Review = await review.find({for:req.payload._id}).populate('createdby')
             const completedOrders = await order.find({talent_id:req.payload._id,status:"completed"})
             const earn = await Earn.findOne({_id:req.payload._id})
+
+
+            // const level = {
+            //     current:1,
+            //     day: 40 - (new Date(((new Date()) - (new Date(User.createdAt))))).getDay(),
+            //     order: 40 - completedOrders.length,
+            //     earn: 400 - earn.total,
+            //     warning: 4
+            // }
+
+            
         
             return res.json({
                 success:true,
@@ -23,7 +34,14 @@ module.exports = {
                     responseTime:"30 mints",
                     review:Review,
                     earn,
-                    completedOrders : completedOrders
+                    completedOrders : completedOrders,
+                    level:{
+                        current:1,
+                        day: 40 - (new Date(((new Date()) - (new Date(User.createdAt))))).getDay(),
+                        order: 40 - completedOrders.length,
+                        earn: 400 - earn.total,
+                        warning: 4
+                    }
                 }
             })
         }catch(err){

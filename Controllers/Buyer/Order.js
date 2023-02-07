@@ -78,10 +78,10 @@ module.exports = {
             })
 
 
-            const getEarn = await earn.findOne({_id:req.payload._id})
+            const getEarn = await earn.findOne({_id:find_order.talent_id.toHexString()})
 
             const updateEarn = await earn.updateOne({
-                _id:req.payload._id
+                _id:find_order.talent_id.toHexString()
             },{
                 $set:{
                     total:getEarn.total + find_order.buget,

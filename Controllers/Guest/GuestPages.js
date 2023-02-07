@@ -1,6 +1,7 @@
 const category = require('../../Models/Catagory')
 const subCategory = require('../../Models/SubCatagory')
 const service = require('../../Models/createServices')
+const User = require("../../Models/User")
 
 module.exports = {
     getAllCategory:async(req,res)=>{
@@ -31,13 +32,28 @@ module.exports = {
     },
     getAllServices:async(req,res)=>{
         try{
-            const Services = await service.find()
+            const Services = await service.find().populate('review')
             return res.json({
                 success:true,
                 data:Services
             })
         }catch(err){
             console.log(err)
+            return res.status(500).json({
+                success:false,
+                message:'try again later',
+                err
+            })
+        }
+    },
+    getUser:async(req,res)=>{
+        try{
+            const user = await User.findOne({_id:req.params.id})
+            return res.json({
+                success:true,
+                data:user
+            })
+        }catch(err){
             return res.status(500).json({
                 success:false,
                 message:'try again later',

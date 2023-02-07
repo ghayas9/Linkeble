@@ -1,6 +1,7 @@
 const express = require('express')
 const { getAllServices ,getOneService } = require('../Controllers/buyer')
 const { getOneOrder ,getAllOrders, deleteOneOrder, AcceptOrder } = require('../Controllers/Buyer/Order')
+const { remove_preference, add_preference, get_preference } = require('../Controllers/Buyer/preference')
 const {Review, getOneReview, getAllReview, deleteReview, updateReview, ReviewMiddleware} = require('../Controllers/Buyer/Review')
 const { payments } = require('../Controllers/Orders/Payments')
 const { placeOrderStepOne, PlaceOrderStepThree } = require('../Controllers/Orders/PlaceOrder')
@@ -38,5 +39,15 @@ route.delete('/buyer/review/:id',auth,ReviewMiddleware,deleteReview)
 route.put('/buyer/review/:id',auth,ReviewMiddleware,updateReview)
 
 ////////////// Review //////////////
+
+
+////////////// preference //////////////
+route.post('/buyer/pre/:id',auth,add_preference)
+route.delete('/buyer/pre/:id',auth,remove_preference)
+route.get('/buyer/pre',auth,get_preference)
+
+////////////// preference //////////////
+
+
 
 module.exports = route

@@ -7,6 +7,6 @@ const route = express.Router()
 route.post('/signin',SignIn)
 route.post('/signup',SignUp)
 route.post('/forget/password/email',forgotPasswordStepOne)
-route.post('/forget/password/verify/otp',forgotPasswordStepTwo)
-route.post('/forget/password/change/password',forgotPasswordFinalStep)
+route.post('/forget/password/verify/token',forgotPasswordStepTwo)
+route.post('/forget/password/change/password/:token',forgotPasswordFinalStep)
 module.exports= route
